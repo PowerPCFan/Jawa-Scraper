@@ -1,5 +1,6 @@
 import time
 import json
+import uuid
 import sys
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
@@ -100,6 +101,7 @@ def main() -> None:
             price = price_tag.get_text(strip=True) if price_tag else "N/A"
 
             listings_data.append({
+                "uuid": uuid.uuid5(uuid.NAMESPACE_URL, listing_url).__str__(),
                 "title": title,
                 "url": listing_url,
                 "thumbnail_url": thumbnail_url,
