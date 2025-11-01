@@ -32,7 +32,7 @@ jobs:
       - name: Run scraper
         id: run_scraper
         run: |-
-          exit_code=$(python3 main.py; echo $?)
+          exit_code=$(python3 scraper/main.py; echo $?)
           echo "exit_code=${exit_code}" >> $GITHUB_ENV
           echo "exit_code=${exit_code}"
           echo "exit_code=${exit_code}" >> $GITHUB_OUTPUT
