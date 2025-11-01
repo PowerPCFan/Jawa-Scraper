@@ -9,7 +9,6 @@ from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright, Browser
 from typing import Any, Final, Union
 from pathlib import Path
-from contextlib import suppress
 
 
 def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Browser) -> dict[str, Any]:
@@ -20,15 +19,17 @@ def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Bro
         html_content = page.content()
 
         # handle the checkout page url stuff here too, since we're already on the listing page
-        checkout_page_url: str | None = None
-        if not sold:
-            print(f"Listing is still available, fetching checkout page URL for listing '{name}'...")
-            # set as listing url just in case it fails
-            checkout_page_url = listing_url
-            with suppress(Exception):
-                with page.expect_navigation(wait_until='domcontentloaded'):
-                    page.click("text=Buy Now")
-                checkout_page_url = page.url
+        # commented out since this does not work
+
+        # checkout_page_url: str | None = None
+        # if not sold:
+        #     print(f"Listing is still available, fetching checkout page URL for listing '{name}'...")
+        #     # set as listing url just in case it fails
+        #     checkout_page_url = listing_url
+        #     with suppress(Exception):
+        #         with page.expect_navigation(wait_until='domcontentloaded'):
+        #             page.click("text=Buy Now")
+        #         checkout_page_url = page.url
 
     soup = BeautifulSoup(html_content, 'html.parser')
 
@@ -51,7 +52,7 @@ def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Bro
                 "description": description,
                 "images": images,
                 "shipping_cost": shipping_cost,
-                "checkout_page_url": checkout_page_url
+                # "checkout_page_url": checkout_page_url
             }
         except json.JSONDecodeError:
             raise Exception(f"Error decoding JSON-LD data for {listing_url}")
@@ -60,7 +61,7 @@ def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Bro
         "description": "No description",
         "images": [],
         "shipping_cost": None,
-        "checkout_page_url": None
+        # "checkout_page_url": None
     }
 
 
@@ -136,7 +137,7 @@ def main(chromium: Browser) -> None:
                     "uuid": listing_uuid,
                     "title": title,
                     "url": listing_url,
-                    "checkout_page_url": details['checkout_page_url'],
+                    # "checkout_page_url": details['checkout_page_url'],
                 },
                 "media": {
                     "thumbnail_url": thumbnail_url,
