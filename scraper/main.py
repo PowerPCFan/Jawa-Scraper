@@ -48,8 +48,11 @@ def get_seller_info(listing_name: str, listing_page: str) -> dict[str, Any]:
         reviews_stars = ceil(float(reviews_area_children[0].text))
         reviews_count = ceil(float(reviews_area_children[1].text.strip(" Reviews")))
 
+        verified = bool(seller_area.select_one('img[alt="Jawa Verified"]'))
+
         return {
             "name": seller_name,
+            "verified": verified,
             "pfp": image_proxy + str(pfp_url),
             "profile_url": profile_url,
             "reviews_count": reviews_count,
@@ -59,6 +62,7 @@ def get_seller_info(listing_name: str, listing_page: str) -> dict[str, Any]:
     else:
         return {
             "name": None,
+            "verified": None,
             "pfp": None,
             "profile_url": None,
             "reviews_count": None,
@@ -191,6 +195,7 @@ def main(chromium: Browser) -> None:
                 },
                 "seller": {
                     "name": seller_info['name'],
+                    "verified": seller_info['verified'],
                     "pfp": seller_info['pfp'],
                     "profile_url": seller_info['profile_url'],
                     "reviews": {
