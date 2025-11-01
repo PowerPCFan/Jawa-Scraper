@@ -1,5 +1,3 @@
-# i hate this code
-
 import time
 import json
 import uuid
@@ -9,6 +7,19 @@ from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright, Browser
 from typing import Any, Final, Union
 from pathlib import Path
+
+
+start_time = time.time()
+
+charlies_computers_page: Final[str] = "https://www.jawa.gg/sp/184151/charlies-computers"
+image_proxy: Final[str] = "https://corsproxy.io/?url="
+listings_grid_query: Final[str] = "div.tw-group.tw-relative"
+
+output_dir: Final[Path] = Path(__file__).parent.parent / "output"
+output_file: Final[Path] = output_dir / "listings.json"
+output_dir.mkdir(parents=True, exist_ok=True)
+output_file.unlink(missing_ok=True)
+output_file.touch(exist_ok=True)
 
 
 def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Browser) -> dict[str, Any]:
@@ -42,11 +53,15 @@ def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Bro
             offers: dict = json_ld_data.get('offers', {})
             shipping_cost = offers.get('shippingDetails', {}).get('shippingRate', {}).get('value', None)
 
-            images: list = [
+            images: list[str] = [
                 img['src'] for img in soup.select(
                     'div.tw-hidden div.swiper.swiper-horizontal div.swiper-wrapper img'
                 ) if 'src' in img.attrs
-            ]
+            ]  # type: ignore
+            for index, image in enumerate(images):
+                if image.startswith('/'):
+                    images[index] = urljoin("https://www.jawa.gg", image)
+                images[index] = image_proxy + image
 
             return {
                 "description": description,
@@ -66,17 +81,6 @@ def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Bro
 
 
 def main(chromium: Browser) -> None:
-    start_time = time.time()
-
-    charlies_computers_page: Final[str] = "https://www.jawa.gg/sp/184151/charlies-computers"
-    listings_grid_query: Final[str] = "div.tw-group.tw-relative"
-
-    output_dir: Final[Path] = Path(__file__).parent.parent / "output"
-    output_file: Final[Path] = output_dir / "listings.json"
-    output_dir.mkdir(parents=True, exist_ok=True)
-    output_file.unlink(missing_ok=True)
-    output_file.touch(exist_ok=True)
-
     with chromium.new_page() as page:
         print(f"Crawling listings from {charlies_computers_page}...")
         page.goto(charlies_computers_page)
@@ -106,6 +110,7 @@ def main(chromium: Browser) -> None:
             thumbnail_url = str(image_tag['src']) if image_tag else ""
             if thumbnail_url.startswith('/'):
                 thumbnail_url = urljoin("https://www.jawa.gg", thumbnail_url)
+            thumbnail_url = image_proxy + thumbnail_url
 
             title_tag = listing_container.select_one('div.tw-paragraph-m-bold')
             title = title_tag.get_text(strip=True) if title_tag else "No Title"
