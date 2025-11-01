@@ -30,17 +30,10 @@ jobs:
           python3 -m playwright install --with-deps chromium
 
       - name: Run scraper
-        id: run_scraper
-        run: |-
-          exit_code=$(python3 scraper/main.py; echo $?)
-          echo "exit_code=${exit_code}" >> $GITHUB_ENV
-          echo "exit_code=${exit_code}"
-          echo "exit_code=${exit_code}" >> $GITHUB_OUTPUT
-        shell: bash
-        continue-on-error: true
+        run: python3 scraper/main.py
 
       - name: Commit updated listings.json
-        if: ${{ steps.run_scraper.outputs.exit_code == '0' }}
+        if: ${{ success() }}
         run: |-
           echo "Update needed. Updating..."
           git config user.name "Automated"
@@ -48,9 +41,3 @@ jobs:
           git add output/listings.json
           timestamp=$(date -u)
           git commit -m "Update listings.json: ${timestamp}" || exit 0
-          git push origin main
-
-      - name: Handle scraper failure
-        if: ${{ steps.run_scraper.outputs.exit_code == '1' }}
-        run: |-
-          echo "Scraper failed. Check logs for details."
