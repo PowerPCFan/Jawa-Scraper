@@ -13,6 +13,7 @@ start_time = time.time()
 
 charlies_computers_page: Final[str] = "https://www.jawa.gg/sp/184151/charlies-computers"
 image_proxy: Final[str] = "https://corsproxy.io/?url="
+jawa_base_url: Final[str] = "https://www.jawa.gg"
 listings_grid_query: Final[str] = "div.tw-group.tw-relative"
 
 output_dir: Final[Path] = Path(__file__).parent.parent / "output"
@@ -22,25 +23,55 @@ output_file.unlink(missing_ok=True)
 output_file.touch(exist_ok=True)
 
 
-def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Browser) -> dict[str, Any]:
+def get_seller_info(listing_name: str, listing_page: str) -> dict[str, Any]:
+    print(f"Fetching seller info for listing '{listing_name}'...")
+
+    soup = BeautifulSoup(listing_page, 'html.parser')
+
+    seller_area = soup.select('div.tw-flex.tw-flex-col.tw-gap-6 div.tw-flex.tw-items-start.tw-gap-4')[0]
+
+    if seller_area:
+        pfp_area = seller_area.select_one('a')
+        info_area = seller_area.select_one('div.tw-flex.tw-flex-1.tw-flex-col')
+
+        pfp_url = pfp_area.select_one('img')['src'] if pfp_area else None
+
+        name_area = info_area.select_one('div.tw-flex.tw-items-center.tw-gap-3 a')
+        seller_name = name_area.text.strip()
+        profile_url = urljoin(jawa_base_url, str(name_area['href']))
+
+        reviews_area = info_area.select_one('a.tw-flex.tw-items-center.tw-gap-1')
+        reviews_area_children = reviews_area.select('div.tw-pt-1.tw-text-xs')
+
+        reviews_url = urljoin(jawa_base_url, str(reviews_area['href']))
+        reviews_stars = reviews_area_children[0].text
+        reviews_count = reviews_area_children[1].text
+
+        return {
+            "name": seller_name,
+            "pfp": image_proxy + str(pfp_url),
+            "profile_url": profile_url,
+            "reviews_count": reviews_count,
+            "reviews_stars": reviews_stars,
+            "reviews_url": reviews_url
+        }
+    else:
+        return {
+            "name": None,
+            "pfp": None,
+            "profile_url": None,
+            "reviews_count": None,
+            "reviews_stars": None,
+            "reviews_url": None
+        }
+
+
+def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Browser) -> tuple[dict[str, Any], str]:
     with chromium.new_page() as page:
         print(f"\nCrawling details for listing '{name}'...")
         page.goto(listing_url)
         page.wait_for_load_state('domcontentloaded')  # ensure DOM load
         html_content = page.content()
-
-        # handle the checkout page url stuff here too, since we're already on the listing page
-        # commented out since this does not work
-
-        # checkout_page_url: str | None = None
-        # if not sold:
-        #     print(f"Listing is still available, fetching checkout page URL for listing '{name}'...")
-        #     # set as listing url just in case it fails
-        #     checkout_page_url = listing_url
-        #     with suppress(Exception):
-        #         with page.expect_navigation(wait_until='domcontentloaded'):
-        #             page.click("text=Buy Now")
-        #         checkout_page_url = page.url
 
     soup = BeautifulSoup(html_content, 'html.parser')
 
@@ -60,24 +91,22 @@ def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Bro
             ]  # type: ignore
             for index, image in enumerate(images):
                 if image.startswith('/'):
-                    images[index] = urljoin("https://www.jawa.gg", image)
+                    images[index] = urljoin(jawa_base_url, image)
                 images[index] = image_proxy + image
 
-            return {
+            return ({
                 "description": description,
                 "images": images,
                 "shipping_cost": shipping_cost,
-                # "checkout_page_url": checkout_page_url
-            }
+            }, html_content)
         except json.JSONDecodeError:
             raise Exception(f"Error decoding JSON-LD data for {listing_url}")
 
-    return {
+    return ({
         "description": "No description",
         "images": [],
         "shipping_cost": None,
-        # "checkout_page_url": None
-    }
+    }, html_content)
 
 
 def main(chromium: Browser) -> None:
@@ -92,7 +121,7 @@ def main(chromium: Browser) -> None:
 
     listings_grid = soup.select(listings_grid_query)
 
-    listings_dict: dict[str, list[dict[str, Union[str, bool, dict[str, Union[str, bool, None]], None]]]] = {
+    listings_dict: dict[str, list[dict[str, Union[str, bool, dict[str, Union[str, bool, dict[str, str], None]], None]]]] = {
         "listings": []
     }
     listings_data = listings_dict["listings"]
@@ -102,14 +131,14 @@ def main(chromium: Browser) -> None:
             listing_url_tag = listing_container.select_one('a')
             listing_url = str(listing_url_tag['href']) if listing_url_tag else "#"
             if listing_url.startswith('/'):
-                listing_url = urljoin("https://www.jawa.gg", listing_url)
+                listing_url = urljoin(jawa_base_url, listing_url)
 
             listing_uuid = uuid.uuid5(uuid.NAMESPACE_URL, listing_url).__str__()
 
             image_tag = listing_container.select_one('img')
             thumbnail_url = str(image_tag['src']) if image_tag else ""
             if thumbnail_url.startswith('/'):
-                thumbnail_url = urljoin("https://www.jawa.gg", thumbnail_url)
+                thumbnail_url = urljoin(jawa_base_url, thumbnail_url)
             thumbnail_url = image_proxy + thumbnail_url
 
             title_tag = listing_container.select_one('div.tw-paragraph-m-bold')
@@ -130,12 +159,14 @@ def main(chromium: Browser) -> None:
             #     "sold_out": sold_out
             # })
 
-            details = crawl_listing_details(
+            details, listing_page = crawl_listing_details(
                 listing_url,
                 title,
                 sold_out,
                 chromium
             )
+
+            seller_info = get_seller_info(title, listing_page)
 
             listings_data.append({
                 "metadata": {
@@ -156,6 +187,16 @@ def main(chromium: Browser) -> None:
                 },
                 "details": {
                     "description": details['description']
+                },
+                "seller": {
+                    "name": seller_info['name'],
+                    "pfp": seller_info['pfp'],
+                    "profile_url": seller_info['profile_url'],
+                    "reviews": {
+                        "count": seller_info['reviews_count'],
+                        "stars": seller_info['reviews_stars'],
+                        "url": seller_info['reviews_url']
+                    }
                 }
             })
         except Exception as e:
