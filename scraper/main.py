@@ -1,22 +1,34 @@
+# i hate this code
+
 import time
 import json
 import uuid
 import sys
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
-from playwright.sync_api import sync_playwright
-from typing import Any, Final
+from playwright.sync_api import sync_playwright, Browser
+from typing import Any, Final, Union
 from pathlib import Path
+from contextlib import suppress
 
 
-def crawl_listing_details(url: str, name: str) -> dict:
-    with sync_playwright() as playwright:
-        with playwright.chromium.launch(headless=True) as chromium:
-            with chromium.new_page() as page:
-                print(f"Crawling details for listing '{name}' ({url})...")
-                page.goto(url)
-                page.wait_for_timeout(5000)
-                html_content = page.content()
+def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Browser) -> dict[str, Any]:
+    with chromium.new_page() as page:
+        print(f"\nCrawling details for listing '{name}'...")
+        page.goto(listing_url)
+        page.wait_for_load_state('domcontentloaded')  # ensure DOM load
+        html_content = page.content()
+
+        # handle the checkout page url stuff here too, since we're already on the listing page
+        checkout_page_url: str | None = None
+        if not sold:
+            print(f"Listing is still available, fetching checkout page URL for listing '{name}'...")
+            # set as listing url just in case it fails
+            checkout_page_url = listing_url
+            with suppress(Exception):
+                with page.expect_navigation(wait_until='domcontentloaded'):
+                    page.click("text=Buy Now")
+                checkout_page_url = page.url
 
     soup = BeautifulSoup(html_content, 'html.parser')
 
@@ -25,11 +37,11 @@ def crawl_listing_details(url: str, name: str) -> dict:
         try:
             # use json data that is conveniently at the top of the page
             json_ld_data: dict[str, Any] = json.loads(json_ld_tag.string or '{}')
-            description = json_ld_data.get('description', 'No description')
+            description: str = json_ld_data.get('description', 'No description')
             offers: dict = json_ld_data.get('offers', {})
-            shipping_cost = offers.get('shippingDetails', {}).get('shippingRate', {}).get('value', 'N/A')
+            shipping_cost = offers.get('shippingDetails', {}).get('shippingRate', {}).get('value', None)
 
-            images = [
+            images: list = [
                 img['src'] for img in soup.select(
                     'div.tw-hidden div.swiper.swiper-horizontal div.swiper-wrapper img'
                 ) if 'src' in img.attrs
@@ -38,19 +50,21 @@ def crawl_listing_details(url: str, name: str) -> dict:
             return {
                 "description": description,
                 "images": images,
-                "shipping_cost": shipping_cost
+                "shipping_cost": shipping_cost,
+                "checkout_page_url": checkout_page_url
             }
         except json.JSONDecodeError:
-            raise Exception(f"Error decoding JSON-LD data for {url}")
+            raise Exception(f"Error decoding JSON-LD data for {listing_url}")
 
     return {
         "description": "No description",
         "images": [],
-        "shipping_cost": "N/A"
+        "shipping_cost": None,
+        "checkout_page_url": None
     }
 
 
-def main() -> None:
+def main(chromium: Browser) -> None:
     start_time = time.time()
 
     charlies_computers_page: Final[str] = "https://www.jawa.gg/sp/184151/charlies-computers"
@@ -62,19 +76,18 @@ def main() -> None:
     output_file.unlink(missing_ok=True)
     output_file.touch(exist_ok=True)
 
-    with sync_playwright() as playwright:
-        with playwright.chromium.launch(headless=True) as chromium:
-            with chromium.new_page() as page:
-                print(f"Crawling listings from {charlies_computers_page}...")
-                page.goto(charlies_computers_page)
-                page.wait_for_selector(listings_grid_query)
-                html: str = page.content()
+    with chromium.new_page() as page:
+        print(f"Crawling listings from {charlies_computers_page}...")
+        page.goto(charlies_computers_page)
+        # ensure that the listings are loaded and visible
+        page.wait_for_selector(listings_grid_query, state='visible')
+        html: str = page.content()
 
     soup = BeautifulSoup(html, 'html.parser')
 
     listings_grid = soup.select(listings_grid_query)
 
-    listings_dict: dict[str, list[dict[str, str | bool]]] = {
+    listings_dict: dict[str, list[dict[str, Union[str, bool, dict[str, Union[str, bool, None]], None]]]] = {
         "listings": []
     }
     listings_data = listings_dict["listings"]
@@ -85,6 +98,8 @@ def main() -> None:
             listing_url = str(listing_url_tag['href']) if listing_url_tag else "#"
             if listing_url.startswith('/'):
                 listing_url = urljoin("https://www.jawa.gg", listing_url)
+
+            listing_uuid = uuid.uuid5(uuid.NAMESPACE_URL, listing_url).__str__()
 
             image_tag = listing_container.select_one('img')
             thumbnail_url = str(image_tag['src']) if image_tag else ""
@@ -98,26 +113,47 @@ def main() -> None:
             sold_out = bool(sold_out_tag and "Sold out" in sold_out_tag.get_text())
 
             price_tag = listing_container.select_one('div.tw-paragraph-m-bold.tw-text-brand-primary')
-            price = price_tag.get_text(strip=True) if price_tag else "N/A"
+            price = price_tag.get_text(strip=True) if price_tag else None
+
+            # temp_listings_data.append({
+            #     "uuid": listing_uuid,
+            #     "title": title,
+            #     "url": listing_url,
+            #     "thumbnail_url": thumbnail_url,
+            #     "price": price,
+            #     "sold_out": sold_out
+            # })
+
+            details = crawl_listing_details(
+                listing_url,
+                title,
+                sold_out,
+                chromium
+            )
 
             listings_data.append({
-                "uuid": uuid.uuid5(uuid.NAMESPACE_URL, listing_url).__str__(),
-                "title": title,
-                "url": listing_url,
-                "thumbnail_url": thumbnail_url,
-                "price": price,
-                "sold_out": sold_out
+                "metadata": {
+                    "uuid": listing_uuid,
+                    "title": title,
+                    "url": listing_url,
+                    "checkout_page_url": details['checkout_page_url'],
+                },
+                "media": {
+                    "thumbnail_url": thumbnail_url,
+                    "images": details['images'],
+
+                },
+                "status": {
+                    "price": price,
+                    "shipping_cost": details['shipping_cost'],
+                    "sold_out": sold_out
+                },
+                "details": {
+                    "description": details['description']
+                }
             })
         except Exception as e:
             raise Exception(f"Error processing listing: {e}")
-
-    for listing in listings_data:
-        try:
-            if isinstance(listing['url'], str):
-                details = crawl_listing_details(listing['url'], listing['title'])  # type: ignore
-                listing.update(details)
-        except Exception as e:
-            print(f"Error crawling details for {listing['url']}: {e}")
 
     with open(output_file, mode='w', encoding='utf-8') as file:
         print(f"Writing JSON data to {output_file}...")
@@ -129,7 +165,9 @@ def main() -> None:
 
 if __name__ == "__main__":
     try:
-        main()
+        with sync_playwright() as playwright:
+            with playwright.chromium.launch(headless=True) as chromium:
+                main(chromium)
         sys.exit(0)
     except Exception as e:
         print(f"An error occurred: {e}")
