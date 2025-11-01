@@ -7,6 +7,7 @@ from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright, Browser
 from typing import Any, Final, Union
 from pathlib import Path
+from math import ceil
 
 
 start_time = time.time()
@@ -44,8 +45,8 @@ def get_seller_info(listing_name: str, listing_page: str) -> dict[str, Any]:
         reviews_area_children = reviews_area.select('div.tw-pt-1.tw-text-xs')
 
         reviews_url = urljoin(jawa_base_url, str(reviews_area['href']))
-        reviews_stars = reviews_area_children[0].text
-        reviews_count = reviews_area_children[1].text
+        reviews_stars = ceil(float(reviews_area_children[0].text))
+        reviews_count = ceil(float(reviews_area_children[1].text.strip(" Reviews")))
 
         return {
             "name": seller_name,
