@@ -1,0 +1,56 @@
+name: Scrape Charlie's Computers listings on Jawa daily at 3 AM UTC
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 3 * * *'
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+jobs:
+  scheduled:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: 3.13
+
+      - name: Install dependencies
+        run: >-
+          python3 -m pip install --upgrade pip &&
+          python3 -m pip install -r requirements.txt &&
+          python3 -m playwright install --with-deps chromium
+
+      - name: Run scraper
+        id: run_scraper
+        run: |-
+          exit_code=$(python3 main.py; echo $?)
+          echo "exit_code=${exit_code}" >> $GITHUB_ENV
+          echo "exit_code=${exit_code}"
+          echo "exit_code=${exit_code}" >> $GITHUB_OUTPUT
+        shell: bash
+        continue-on-error: true
+
+      - name: Commit updated listings.json
+        if: ${{ steps.run_scraper.outputs.exit_code == '0' }}
+        run: |-
+          echo "Update needed. Updating..."
+          git config user.name "Automated"
+          git config user.email "actions@users.noreply.github.com"
+          git add output/listings.json
+          timestamp=$(date -u)
+          git commit -m "Update listings.json: ${timestamp}" || exit 0
+          git push origin main
+
+      - name: Handle scraper failure
+        if: ${{ steps.run_scraper.outputs.exit_code == '1' }}
+        run: |-
+          echo "Scraper failed. Check logs for details."
