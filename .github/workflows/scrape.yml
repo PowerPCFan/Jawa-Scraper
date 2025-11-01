@@ -41,3 +41,4 @@ jobs:
           git add output/listings.json
           timestamp=$(date -u)
           git commit -m "Update listings.json: ${timestamp}" || exit 0
+          git push origin main
