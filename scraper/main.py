@@ -176,27 +176,14 @@ def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Bro
     }
 
 
-# def crawl_seller_listings(chromium: Browser) -> None:
-
-
-def main(chromium: Browser) -> None:
-    with chromium.new_page() as page:
-        page.goto(charlies_computers_page)
-        page.wait_for_selector(listings_grid_query, state='visible')
-        seller_page_html: str = page.content()
-        seller_info = get_seller_info(charlies_computers_page, seller_page_html)
-
+def crawl_seller_listings(seller_page_html: str) -> list[ListingData]:
     print(f"Crawling listings from {charlies_computers_page}...")
 
     soup = BeautifulSoup(seller_page_html, 'html.parser')
 
-    listings_grid = soup.select(listings_grid_query)
+    listing_data_list: list[ListingData] = []
 
-    listings_dict: ListingsDict = {
-        "seller_info": seller_info,
-        "listings": []
-    }
-    listings_data = listings_dict["listings"]
+    listings_grid = soup.select(listings_grid_query)
 
     for listing_container in listings_grid:
         try:
@@ -229,7 +216,7 @@ def main(chromium: Browser) -> None:
                 chromium
             )
 
-            listings_data.append({
+            listing_data_list.append({
                 "metadata": {
                     "uuid": listing_uuid,
                     "title": title,
@@ -250,6 +237,20 @@ def main(chromium: Browser) -> None:
             })
         except Exception as e:
             raise Exception(f"Error processing listing: {e}")
+
+    return listing_data_list
+
+
+def main(chromium: Browser) -> None:
+    with chromium.new_page() as page:
+        page.goto(charlies_computers_page)
+        page.wait_for_selector(listings_grid_query, state='visible')
+        seller_page_html: str = page.content()
+
+    listings_dict: ListingsDict = {
+        "seller_info": get_seller_info(charlies_computers_page, seller_page_html),
+        "listings": crawl_seller_listings(seller_page_html)
+    }
 
     with open(output_file, mode='w', encoding='utf-8') as file:
         print(f"Writing JSON data to {output_file}...")

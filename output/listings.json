@@ -1,15 +1,19 @@
 {
     "seller_info": {
-        "name": "Charlie's Computers",
-        "heading": "The best high-performance, aesthetically pleasing gaming PCs on the market!",
-        "verified": true,
-        "pfp": "https://external-content.duckduckgo.com/iu/?u=https://www.jawa.gg/images/production-avatar-d573f9f2b879262425522204bed55bed/width=128,height=128,quality=80,format=auto,fit=cover",
-        "profile_url": "https://www.jawa.gg/sp/184151/charlies-computers",
-        "reviews_count": 6,
-        "reviews_stars": 5,
-        "reviews_url": "https://www.jawa.gg/sp/184151/charlies-computers/reviews#tabs",
-        "followers": 11,
-        "listings_sold": 8
+        "profile": {
+            "url": "https://www.jawa.gg/sp/184151/charlies-computers",
+            "picture": "https://external-content.duckduckgo.com/iu/?u=https://www.jawa.gg/images/production-avatar-d573f9f2b879262425522204bed55bed/width=128,height=128,quality=80,format=auto,fit=cover",
+            "name": "Charlie's Computers",
+            "verified": true,
+            "followers": 11,
+            "sold": 8
+        },
+        "reviews": {
+            "count": 6,
+            "stars": 5,
+            "url": "https://www.jawa.gg/sp/184151/charlies-computers/reviews#tabs"
+        },
+        "heading": "The best high-performance, aesthetically pleasing gaming PCs on the market!"
     },
     "listings": [
         {
