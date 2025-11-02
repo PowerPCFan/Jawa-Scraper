@@ -29,6 +29,7 @@ class SellerProfile(TypedDict):
 class SellerInfo(TypedDict):
     profile: SellerProfile
     reviews: ReviewsInfo
+    images: list[str]
     heading: str
 
 
@@ -92,6 +93,11 @@ def get_seller_info(seller_page_url: str, seller_page_html: str) -> SellerInfo:
 
     seller_area_children = soup.select('section.tw-grid.tw-grid-cols-1.tw-gap-8 > div > div > div,h1')
 
+    # basically the same selector as seller_area_children since it matches both sections with a different list index
+    image_swiper_slides = soup.select('section.tw-grid.tw-grid-cols-1.tw-gap-8 > div > div > div > div')
+    # remove first two "slides" that are part of seller area
+    image_swiper_slides = image_swiper_slides[2:]
+
     seller_info_card = seller_area_children[0]
     heading = seller_area_children[1].get_text(strip=True)
     # note: [2] is the container for the follow/message buttons
@@ -115,6 +121,16 @@ def get_seller_info(seller_page_url: str, seller_page_html: str) -> SellerInfo:
     followers = int(followers_info[0].replace('followers', '').strip())
     listings_sold = int(followers_info[2].replace('sold', '').strip())
 
+    # each swiper slide container has an image inside, and each slide has a data-swiper-slide-index attribute
+    # sort slides by their data-swiper-slide-index attribute to keep the order that the seller set
+    def get_slide_index(slide):
+        index_attr = slide.get('data-swiper-slide-index')
+        if index_attr is None:
+            return 0
+        return int(str(index_attr))
+
+    images = [str(slide.select('img')[0]['src']) for slide in sorted(image_swiper_slides, key=get_slide_index)]
+
     return {
         "profile": {
             "url": seller_page_url,
@@ -129,6 +145,9 @@ def get_seller_info(seller_page_url: str, seller_page_html: str) -> SellerInfo:
             "stars": reviews_stars,
             "url": reviews_url
         },
+        "images": [
+            image_proxy + img for img in images
+        ],
         "heading": heading,
     }
 
