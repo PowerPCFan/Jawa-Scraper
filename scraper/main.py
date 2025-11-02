@@ -2,18 +2,77 @@ import time
 import json
 import uuid
 import sys
+import re as regexp
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright, Browser
-from typing import Any, Final, Union
+from typing import TypedDict, Final
 from pathlib import Path
 from math import ceil
+
+
+class ReviewsInfo(TypedDict):
+    count: int | None
+    stars: int | None
+    url: str | None
+
+
+class SellerInfo(TypedDict):
+    name: str | None
+    heading: str | None
+    verified: bool | None
+    pfp: str | None
+    profile_url: str | None
+    reviews_count: int | None
+    reviews_stars: int | None
+    reviews_url: str | None
+    followers: int | None
+    listings_sold: int | None
+
+
+class ListingMetadata(TypedDict):
+    uuid: str
+    title: str
+    url: str
+
+
+class ListingMedia(TypedDict):
+    thumbnail_url: str
+    images: list[str]
+
+
+class ListingStatus(TypedDict):
+    price: str | None
+    shipping_cost: float | None
+    sold_out: bool
+
+
+class ListingDetails(TypedDict):
+    description: str
+
+
+class ListingData(TypedDict):
+    metadata: ListingMetadata
+    media: ListingMedia
+    status: ListingStatus
+    details: ListingDetails
+
+
+class ListingsDict(TypedDict):
+    seller_info: SellerInfo
+    listings: list[ListingData]
+
+
+class ListingResponse(TypedDict):
+    description: str
+    images: list[str]
+    shipping_cost: float | None
 
 
 start_time = time.time()
 
 charlies_computers_page: Final[str] = "https://www.jawa.gg/sp/184151/charlies-computers"
-image_proxy: Final[str] = "https://corsproxy.io/?url="
+image_proxy: Final[str] = "https://external-content.duckduckgo.com/iu/?u="
 jawa_base_url: Final[str] = "https://www.jawa.gg"
 listings_grid_query: Final[str] = "div.tw-group.tw-relative"
 
@@ -24,56 +83,53 @@ output_file.unlink(missing_ok=True)
 output_file.touch(exist_ok=True)
 
 
-def get_seller_info(listing_name: str, listing_page: str) -> dict[str, Any]:
-    print(f"Fetching seller info for listing '{listing_name}'...")
+def get_seller_info(seller_page_url: str, seller_page_html: str) -> SellerInfo:
+    print(f"Fetching seller info from {seller_page_url}...")
 
-    soup = BeautifulSoup(listing_page, 'html.parser')
+    soup = BeautifulSoup(seller_page_html, 'html.parser')
 
-    seller_area = soup.select('div.tw-flex.tw-flex-col.tw-gap-6 div.tw-flex.tw-items-start.tw-gap-4')[0]
+    seller_area_children = soup.select('section.tw-grid.tw-grid-cols-1.tw-gap-8 > div > div > div,h1')
 
-    if seller_area:
-        pfp_area = seller_area.select_one('a')
-        info_area = seller_area.select_one('div.tw-flex.tw-flex-1.tw-flex-col')
+    seller_info_card = seller_area_children[0]
+    heading = seller_area_children[1].get_text(strip=True)
+    # note: [2] is the container for the follow/message buttons
+    followers_info = seller_area_children[3].get_text(strip=True).split('•')
 
-        pfp_url = pfp_area.select_one('img')['src'] if pfp_area else None
+    seller_pfp_container = seller_info_card.select('div.tw-relative.tw-z-\\[100\\]')[0]
+    seller_info_container = seller_info_card.select('div.tw-flex.tw-flex-col.tw-gap-1')[0]
 
-        name_area = info_area.select_one('div.tw-flex.tw-items-center.tw-gap-3 a')
-        seller_name = name_area.text.strip()
-        profile_url = urljoin(jawa_base_url, str(name_area['href']))
+    pfp_url = seller_pfp_container.select('div > img')[0]['src']
+    verified = bool(seller_pfp_container.select_one('img[alt="Jawa Verified"]'))
 
-        reviews_area = info_area.select_one('a.tw-flex.tw-items-center.tw-gap-1')
-        reviews_area_children = reviews_area.select('div.tw-pt-1.tw-text-xs')
+    seller_name = seller_info_container.select('div.tw-flex > div')[0].get_text(strip=True)
+    reviews_container = seller_info_container.select('a')[0]
 
-        reviews_url = urljoin(jawa_base_url, str(reviews_area['href']))
-        reviews_stars = ceil(float(reviews_area_children[0].text))
-        reviews_count = ceil(float(reviews_area_children[1].text.strip(" Reviews")))
+    reviews_url = urljoin(jawa_base_url, reviews_container['href'].__str__())
+    reviews_stars = ceil(float(str(reviews_container.select('div.tw-pt-1')[0].get_text(strip=True))))
+    def get_review_count(text: str):  # noqa: E306
+        return int(regexp.sub(r'\D', '', text))
+    reviews_count = get_review_count(str(reviews_container.select('div.tw-pt-1')[1].get_text(strip=True)))
 
-        verified = bool(seller_area.select_one('img[alt="Jawa Verified"]'))
+    followers = int(followers_info[0].replace('followers', '').strip())
+    listings_sold = int(followers_info[2].replace('sold', '').strip())
 
-        return {
-            "name": seller_name,
-            "verified": verified,
-            "pfp": image_proxy + str(pfp_url),
-            "profile_url": profile_url,
-            "reviews_count": reviews_count,
-            "reviews_stars": reviews_stars,
-            "reviews_url": reviews_url
-        }
-    else:
-        return {
-            "name": None,
-            "verified": None,
-            "pfp": None,
-            "profile_url": None,
-            "reviews_count": None,
-            "reviews_stars": None,
-            "reviews_url": None
-        }
+    return {
+        "name": seller_name,
+        "heading": heading,
+        "verified": verified,
+        "pfp": image_proxy + str(pfp_url),
+        "profile_url": seller_page_url,
+        "reviews_count": reviews_count,
+        "reviews_stars": reviews_stars,
+        "reviews_url": reviews_url,
+        "followers": followers,
+        "listings_sold": listings_sold
+    }
 
 
-def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Browser) -> tuple[dict[str, Any], str]:
+def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Browser) -> ListingResponse:
     with chromium.new_page() as page:
-        print(f"\nCrawling details for listing '{name}'...")
+        print(f"Crawling details for listing '{name}'...")
         page.goto(listing_url)
         page.wait_for_load_state('domcontentloaded')  # ensure DOM load
         html_content = page.content()
@@ -84,7 +140,7 @@ def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Bro
     if json_ld_tag:
         try:
             # use json data that is conveniently at the top of the page
-            json_ld_data: dict[str, Any] = json.loads(json_ld_tag.string or '{}')
+            json_ld_data = json.loads(json_ld_tag.string or '{}')
             description: str = json_ld_data.get('description', 'No description')
             offers: dict = json_ld_data.get('offers', {})
             shipping_cost = offers.get('shippingDetails', {}).get('shippingRate', {}).get('value', None)
@@ -99,34 +155,36 @@ def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Bro
                     images[index] = urljoin(jawa_base_url, image)
                 images[index] = image_proxy + image
 
-            return ({
+            return {
                 "description": description,
                 "images": images,
                 "shipping_cost": shipping_cost,
-            }, html_content)
+            }
         except json.JSONDecodeError:
             raise Exception(f"Error decoding JSON-LD data for {listing_url}")
 
-    return ({
+    return {
         "description": "No description",
         "images": [],
         "shipping_cost": None,
-    }, html_content)
+    }
 
 
 def main(chromium: Browser) -> None:
     with chromium.new_page() as page:
-        print(f"Crawling listings from {charlies_computers_page}...")
         page.goto(charlies_computers_page)
-        # ensure that the listings are loaded and visible
         page.wait_for_selector(listings_grid_query, state='visible')
-        html: str = page.content()
+        seller_page_html: str = page.content()
+        seller_info = get_seller_info(charlies_computers_page, seller_page_html)
 
-    soup = BeautifulSoup(html, 'html.parser')
+        print(f"Crawling listings from {charlies_computers_page}...")
+
+    soup = BeautifulSoup(seller_page_html, 'html.parser')
 
     listings_grid = soup.select(listings_grid_query)
 
-    listings_dict: dict[str, list[dict[str, Union[str, bool, dict[str, Union[str, bool, dict[str, str], None]], None]]]] = {
+    listings_dict: ListingsDict = {
+        "seller_info": seller_info,
         "listings": []
     }
     listings_data = listings_dict["listings"]
@@ -155,35 +213,22 @@ def main(chromium: Browser) -> None:
             price_tag = listing_container.select_one('div.tw-paragraph-m-bold.tw-text-brand-primary')
             price = price_tag.get_text(strip=True) if price_tag else None
 
-            # temp_listings_data.append({
-            #     "uuid": listing_uuid,
-            #     "title": title,
-            #     "url": listing_url,
-            #     "thumbnail_url": thumbnail_url,
-            #     "price": price,
-            #     "sold_out": sold_out
-            # })
-
-            details, listing_page = crawl_listing_details(
+            details = crawl_listing_details(
                 listing_url,
                 title,
                 sold_out,
                 chromium
             )
 
-            seller_info = get_seller_info(title, listing_page)
-
             listings_data.append({
                 "metadata": {
                     "uuid": listing_uuid,
                     "title": title,
                     "url": listing_url,
-                    # "checkout_page_url": details['checkout_page_url'],
                 },
                 "media": {
                     "thumbnail_url": thumbnail_url,
                     "images": details['images'],
-
                 },
                 "status": {
                     "price": price,
@@ -192,17 +237,6 @@ def main(chromium: Browser) -> None:
                 },
                 "details": {
                     "description": details['description']
-                },
-                "seller": {
-                    "name": seller_info['name'],
-                    "verified": seller_info['verified'],
-                    "pfp": seller_info['pfp'],
-                    "profile_url": seller_info['profile_url'],
-                    "reviews": {
-                        "count": seller_info['reviews_count'],
-                        "stars": seller_info['reviews_stars'],
-                        "url": seller_info['reviews_url']
-                    }
                 }
             })
         except Exception as e:
@@ -210,7 +244,7 @@ def main(chromium: Browser) -> None:
 
     with open(output_file, mode='w', encoding='utf-8') as file:
         print(f"Writing JSON data to {output_file}...")
-        json.dump(listings_data, file, indent=4)
+        json.dump(listings_dict, file, indent=4)
 
     end_time = time.time()
     print(f"Time elapsed: {end_time - start_time:.2f} seconds")
