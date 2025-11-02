@@ -2,32 +2,34 @@ import time
 import json
 import uuid
 import sys
+import math
 import re as regexp
 from urllib.parse import urljoin
 from bs4 import BeautifulSoup
 from playwright.sync_api import sync_playwright, Browser
 from typing import TypedDict, Final
 from pathlib import Path
-from math import ceil
 
 
 class ReviewsInfo(TypedDict):
-    count: int | None
-    stars: int | None
-    url: str | None
+    count: int
+    stars: int
+    url: str
+
+
+class SellerProfile(TypedDict):
+    url: str
+    picture: str
+    name: str
+    verified: bool
+    followers: int
+    sold: int
 
 
 class SellerInfo(TypedDict):
-    name: str | None
-    heading: str | None
-    verified: bool | None
-    pfp: str | None
-    profile_url: str | None
-    reviews_count: int | None
-    reviews_stars: int | None
-    reviews_url: str | None
-    followers: int | None
-    listings_sold: int | None
+    profile: SellerProfile
+    reviews: ReviewsInfo
+    heading: str
 
 
 class ListingMetadata(TypedDict):
@@ -105,7 +107,7 @@ def get_seller_info(seller_page_url: str, seller_page_html: str) -> SellerInfo:
     reviews_container = seller_info_container.select('a')[0]
 
     reviews_url = urljoin(jawa_base_url, reviews_container['href'].__str__())
-    reviews_stars = ceil(float(str(reviews_container.select('div.tw-pt-1')[0].get_text(strip=True))))
+    reviews_stars = math.ceil(float(str(reviews_container.select('div.tw-pt-1')[0].get_text(strip=True))))
     def get_review_count(text: str):  # noqa: E306
         return int(regexp.sub(r'\D', '', text))
     reviews_count = get_review_count(str(reviews_container.select('div.tw-pt-1')[1].get_text(strip=True)))
@@ -114,16 +116,20 @@ def get_seller_info(seller_page_url: str, seller_page_html: str) -> SellerInfo:
     listings_sold = int(followers_info[2].replace('sold', '').strip())
 
     return {
-        "name": seller_name,
+        "profile": {
+            "url": seller_page_url,
+            "picture": image_proxy + str(pfp_url),
+            "name": seller_name,
+            "verified": verified,
+            "followers": followers,
+            "sold": listings_sold
+        },
+        "reviews": {
+            "count": reviews_count,
+            "stars": reviews_stars,
+            "url": reviews_url
+        },
         "heading": heading,
-        "verified": verified,
-        "pfp": image_proxy + str(pfp_url),
-        "profile_url": seller_page_url,
-        "reviews_count": reviews_count,
-        "reviews_stars": reviews_stars,
-        "reviews_url": reviews_url,
-        "followers": followers,
-        "listings_sold": listings_sold
     }
 
 
@@ -170,6 +176,9 @@ def crawl_listing_details(listing_url: str, name: str, sold: bool, chromium: Bro
     }
 
 
+# def crawl_seller_listings(chromium: Browser) -> None:
+
+
 def main(chromium: Browser) -> None:
     with chromium.new_page() as page:
         page.goto(charlies_computers_page)
@@ -177,7 +186,7 @@ def main(chromium: Browser) -> None:
         seller_page_html: str = page.content()
         seller_info = get_seller_info(charlies_computers_page, seller_page_html)
 
-        print(f"Crawling listings from {charlies_computers_page}...")
+    print(f"Crawling listings from {charlies_computers_page}...")
 
     soup = BeautifulSoup(seller_page_html, 'html.parser')
 
