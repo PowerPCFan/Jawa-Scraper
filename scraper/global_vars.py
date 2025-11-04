@@ -2,7 +2,7 @@ from typing import Final
 from pathlib import Path
 
 charlies_computers_page: Final[str] = "https://www.jawa.gg/sp/184151/charlies-computers"
-image_url_prefix: Final[str] = "https://raw.githubusercontent.com/PowerPCFan/shop/refs/heads/main/output/images"
+image_url_prefix: Final[str] = "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images"
 jawa_base_url: Final[str] = "https://www.jawa.gg"
 listings_grid_query: Final[str] = "div.tw-group.tw-relative"
 
