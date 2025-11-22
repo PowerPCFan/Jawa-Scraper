@@ -6,7 +6,7 @@
             "name": "Charlie's Computers",
             "verified": true,
             "followers": 13,
-            "sold": 8
+            "sold": 9
         },
         "reviews": {
             "count": 6,
@@ -22,29 +22,6 @@
         "heading": "The best high-performance, aesthetically pleasing gaming PCs on the market!"
     },
     "listings": [
-        {
-            "metadata": {
-                "uuid": "9de152d9-0352-5a3f-8bbc-eab4f7ab4077",
-                "title": "\u2764\ufe0f\ud83d\udda4 Project Hellspawn \ud83d\udd25\ud83d\udd25 | [GTX 970 | Ryzen 5 2600 | 16GB RAM | 512GB SSD] | Budget Gaming PC",
-                "url": "https://www.jawa.gg/product/98203/project-hellspawn-or-gtx-970-or-ryzen-5-2600-or-16gb-ram-or-512gb-ssd-or-budget-gaming-pc"
-            },
-            "media": {
-                "thumbnail_url": "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-66a2817a878a24237e310a2b81176417/0e551f25-154e-5906-ac5c-aafad1aeb40e.jpeg",
-                "images": [
-                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-66a2817a878a24237e310a2b81176417/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
-                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-437dee15afe3971d9b7c68d3b2486f82/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
-                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-0fb1d09daebe36b960744ce762e15c32/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg"
-                ]
-            },
-            "status": {
-                "price": "$429.99",
-                "shipping_cost": "50.00",
-                "sold_out": false
-            },
-            "details": {
-                "description": "The *Project Hellspawn* Budget Gaming PC is perfect for games, productivity, content creation, streaming, and more, without breaking the bank!\n\nThis PC is:\n- Thoroughly stress-tested and benchmarked to ensure there are no issues present and that it's performing as expected. \n- Ready to go when received with minimal setup - just make an account for Windows, sign in, and you're good to go!\n- Perfect for playing any game at 1080p - benchmarks below!  \n\n**If you have any questions or concerns, feel free to message me before buying.**\n\nGames and Benchmarks:  \n*All benchmarks and games were ran at 1080p.*\n- 3DMark Time Spy - 3888\n- Cinebench R23 (Multi Core) - 6992 pts\n- CS2 (Low) - 144 FPS\n- BeamNG.drive (Low) - 110 FPS\n- The Finals (Low) - 70 FPS\n- Fortnite (Low - DX12) - 100 FPS\n- Fortnite (Legacy Performance Mode) - 150 FPS\n\nPC Specs:\n- CPU: Ryzen 5 2600\n- Cooler: darkFlash Z4 Pro Mist\n- RAM: EVGA SuperSC 16GB DDR4-3000 (2x8gb)\n- Motherboard: SOYO SY-Classic B450M\n- Storage: WD SN730 SDBQNTY 512GB\n- GPU: MSI GTX 970 GAMING 4GB\n- Case: RUIX OV502\n- PSU: Corsair CX450M\n- OS: Windows 11 Pro 24H2 (Activated)\n- Networking: Ethernet / Wi-Fi / Bluetooth\n\n\"What\u2019s In The Box?\"\n- Gaming PC\n- Power Cable\n- Personalized Quick Start Guide  \n&nbsp;  \n**This is not a full setup, don\u2019t expect a keyboard, mouse, or monitor.**"
-            }
-        },
         {
             "metadata": {
                 "uuid": "5056c017-56fd-59da-9355-ff37271dbd73",
@@ -66,6 +43,29 @@
             },
             "details": {
                 "description": "This Gaming PC is perfect for games, productivity, content creation, streaming, and more!\n\nThe PC is...\n- Thoroughly stress-tested and benchmarked to ensure there are no issues present and that it's performing as expected. \n- Ready to go when received with minimal setup. Just make an account, sign in, and you're good to go!\n- Perfect for playing any game at 1080p,  1440p, and 4K with very high FPS!\n- You can also use this PC for tasks other than gaming, like video editing, streaming, or just general everyday computer use.  \n- If you have any questions or concerns, feel free to message me before buying and I'd be happy to help!\n\nGames (NOTE: All games were tested at 1080p resolution):  \n- CS2 (Medium) - 400 FPS\n- BeamNG.drive (Ultra) - 175 FPS (East Coast USA Map), 120 FPS (West Coast USA Map)\n- The Finals (High) - 180 FPS\n- Fortnite (Low - DX12) - 300 FPS\n- Fortnite (DX12 Performance Mode) - 450 FPS\n- Cyberpunk 2077 (Ultra) - 150 FPS\n- Rainbow Six Siege Benchmark - 450 FPS\n- Valorant Benchmark - 1200 FPS\n\nBenchmarks (NOTE: All benchmarks were tested at 1080p resolution):  \n- Unigine Superposition (Medium) - 32246 points\n- 3DMark Steel Nomad - 3792 points\n- 3DMark Time Spy - 15900 points\n\nPC Specs:\n- CPU: Ryzen 5 7600X\n- Cooler: Thermalright Aqua Elite 240\n- RAM: Silicon Power XPOWER 2x16GB DDR5-6000\n- Motherboard: ASRock B650M Pro RS WiFi\n- Storage: Crucial P3 Plus 1TB\n- GPU: ZOTAC GAMING RTX 4070 Twin Edge\n- Case: DIYPC Q3\n- PSU: High Power HP1 750W\n- OS: Windows 11 Pro 24H2 (Activated)\n- Networking: Wi-Fi, Bluetooth, Ethernet\n\nWhat\u2019s In The Box?\n- Gaming PC\n- Power Cable\n- Wi-Fi/Bluetooth Antennas\n- Personalized Quick Start Guide  \n&nbsp;  \n**This is not a full setup, don\u2019t expect peripherals, such as a keyboard, mouse, monitor, or controller. If you are interested in purchasing this PC and need help selecting peripherals, feel free to ask.**"
+            }
+        },
+        {
+            "metadata": {
+                "uuid": "9de152d9-0352-5a3f-8bbc-eab4f7ab4077",
+                "title": "\u2764\ufe0f\ud83d\udda4 Project Hellspawn \ud83d\udd25\ud83d\udd25 | [GTX 970 | Ryzen 5 2600 | 16GB RAM | 512GB SSD] | Budget Gaming PC",
+                "url": "https://www.jawa.gg/product/98203/project-hellspawn-or-gtx-970-or-ryzen-5-2600-or-16gb-ram-or-512gb-ssd-or-budget-gaming-pc"
+            },
+            "media": {
+                "thumbnail_url": "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-66a2817a878a24237e310a2b81176417/0e551f25-154e-5906-ac5c-aafad1aeb40e.jpeg",
+                "images": [
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-66a2817a878a24237e310a2b81176417/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-437dee15afe3971d9b7c68d3b2486f82/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-0fb1d09daebe36b960744ce762e15c32/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg"
+                ]
+            },
+            "status": {
+                "price": null,
+                "shipping_cost": "50.00",
+                "sold_out": true
+            },
+            "details": {
+                "description": "The *Project Hellspawn* Budget Gaming PC is perfect for games, productivity, content creation, streaming, and more, without breaking the bank!\n\nThis PC is:\n- Thoroughly stress-tested and benchmarked to ensure there are no issues present and that it's performing as expected. \n- Ready to go when received with minimal setup - just make an account for Windows, sign in, and you're good to go!\n- Perfect for playing any game at 1080p - benchmarks below!  \n\n**If you have any questions or concerns, feel free to message me before buying.**\n\nGames and Benchmarks:  \n*All benchmarks and games were ran at 1080p.*\n- 3DMark Time Spy - 3888\n- Cinebench R23 (Multi Core) - 6992 pts\n- CS2 (Low) - 144 FPS\n- BeamNG.drive (Low) - 110 FPS\n- The Finals (Low) - 70 FPS\n- Fortnite (Low - DX12) - 100 FPS\n- Fortnite (Legacy Performance Mode) - 150 FPS\n\nPC Specs:\n- CPU: Ryzen 5 2600\n- Cooler: darkFlash Z4 Pro Mist\n- RAM: EVGA SuperSC 16GB DDR4-3000 (2x8gb)\n- Motherboard: SOYO SY-Classic B450M\n- Storage: WD SN730 SDBQNTY 512GB\n- GPU: MSI GTX 970 GAMING 4GB\n- Case: RUIX OV502\n- PSU: Corsair CX450M\n- OS: Windows 11 Pro 24H2 (Activated)\n- Networking: Ethernet / Wi-Fi / Bluetooth\n\n\"What\u2019s In The Box?\"\n- Gaming PC\n- Power Cable\n- Personalized Quick Start Guide  \n&nbsp;  \n**This is not a full setup, don\u2019t expect a keyboard, mouse, or monitor.**"
             }
         },
         {
