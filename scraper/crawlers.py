@@ -85,11 +85,17 @@ def crawl_seller_listing_details(listing_url: str, name: str, sold: bool, chromi
 
     soup = BeautifulSoup(html_content, 'html.parser')
 
-    json_ld_tag = soup.find('script', type='application/ld+json')
+    json_ld_tag = None
+
+    for tag in soup.find_all('script', type='application/ld+json'):
+        if tag.string and tag.string.startswith('{"@context":"https://schema.org","@type":"Product"'):
+            json_ld_tag = tag.string
+            break
+
     if json_ld_tag:
         try:
             # use json data that is conveniently at the top of the page
-            json_ld_data = json.loads(json_ld_tag.string or '{}')
+            json_ld_data = json.loads(json_ld_tag or '{}')
             description: str = json_ld_data.get('description', 'No description')
             offers: dict = json_ld_data.get('offers', {})
             shipping_cost = offers.get('shippingDetails', {}).get('shippingRate', {}).get('value', None)
