@@ -24,6 +24,29 @@
     "listings": [
         {
             "metadata": {
+                "uuid": "5c977ff2-6310-527b-b507-bdb7d35f82e6",
+                "title": "\ud83d\udd34\ud83d\ude80 The Nitro Gamer \u26ab\ufe0f\ud83d\udd25| RX 5700 XT | Ryzen 5 3600 | 1TB SSD | 16GB RAM",
+                "url": "https://www.jawa.gg/product/103811/the-nitro-gamer-or-rx-5700-xt-or-ryzen-5-3600-or-1tb-ssd-or-16gb-ram"
+            },
+            "media": {
+                "thumbnail_url": "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-8b176681daa0d7bcac9736e373d60046/0e551f25-154e-5906-ac5c-aafad1aeb40e.jpeg",
+                "images": [
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-8b176681daa0d7bcac9736e373d60046/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-e69580eed462fc9205172bc0679875bb/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-7d332e28158bb3e5ad5c10daeb8181f6/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg"
+                ]
+            },
+            "status": {
+                "price": "$765.00",
+                "shipping_cost": null,
+                "sold_out": false
+            },
+            "details": {
+                "description": "No description"
+            }
+        },
+        {
+            "metadata": {
                 "uuid": "5056c017-56fd-59da-9355-ff37271dbd73",
                 "title": "\ud83d\udc3c The Panda \ud83d\udc3c RTX 4070 | Ryzen 5 7600X | 1TB SSD | 32GB RAM",
                 "url": "https://www.jawa.gg/product/98204/the-panda-rtx-4070-or-ryzen-5-7600x-or-1tb-ssd-or-32gb-ram"
