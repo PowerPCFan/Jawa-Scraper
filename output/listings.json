@@ -6,7 +6,7 @@
             "name": "Charlie's Computers",
             "verified": true,
             "followers": 14,
-            "sold": 9
+            "sold": 10
         },
         "reviews": {
             "count": 6,
@@ -24,6 +24,29 @@
     "listings": [
         {
             "metadata": {
+                "uuid": "9623b39f-e6ea-5fb0-a858-1abaad94c1c1",
+                "title": "AMD Ryzen 5 5500 (Brand New)",
+                "url": "https://www.jawa.gg/product/103944/amd-ryzen-5-5500-brand-new"
+            },
+            "media": {
+                "thumbnail_url": "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-a02f3c0bd75d89b0173f95b03a1592b9/0e551f25-154e-5906-ac5c-aafad1aeb40e.jpeg",
+                "images": [
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-a02f3c0bd75d89b0173f95b03a1592b9/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-4683b353a6f3cc53f846ff82fc1f05d6/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-309b1a03de469f795aa7a7a8c8bf3278/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg"
+                ]
+            },
+            "status": {
+                "price": null,
+                "shipping_cost": "0.00",
+                "sold_out": true
+            },
+            "details": {
+                "description": "Brand new Ryzen 5 5500 for sale. No box. Ships in a clamshell in a padded envelope."
+            }
+        },
+        {
+            "metadata": {
                 "uuid": "5c977ff2-6310-527b-b507-bdb7d35f82e6",
                 "title": "\ud83d\udd34\ud83d\ude80 The Nitro Gamer \u26ab\ufe0f\ud83d\udd25| RX 5700 XT | Ryzen 5 3600 | 1TB SSD | 16GB RAM",
                 "url": "https://www.jawa.gg/product/103811/the-nitro-gamer-or-rx-5700-xt-or-ryzen-5-3600-or-1tb-ssd-or-16gb-ram"
@@ -37,9 +60,9 @@
                 ]
             },
             "status": {
-                "price": "$765.00",
+                "price": null,
                 "shipping_cost": "0.00",
-                "sold_out": false
+                "sold_out": true
             },
             "details": {
                 "description": "The *Nitro Gamer* Mid-Range Gaming PC is perfect for games, productivity, content creation, streaming, and more!\n\nThis PC is:\n- Thoroughly stress-tested and benchmarked to ensure there are no issues present and that it's performing as expected. \n- Ready to go when received with minimal setup - just make an account for Windows, sign in, and you're good to go!\n- Perfect for playing any game at 1080p and even 1440p - benchmarks below!  \n\n**If you have any questions or concerns, feel free to message me before buying.**\n\nGames and Benchmarks:  \n*All benchmarks and games were run at 1080p resolution. More details in the individual results below.*\n- Unigine Superposition (Medium) - 18024 pts\n- Unigine Heaven (Extreme) - 140 FPS average\n- Cinebench R23 (Multi-core) - 9129 pts\n- 3DMark Steel Nomad - 2195 pts\n- 3DMark Time Spy - 9133 pts\n- BeamNG (Normal) - 125 FPS (EC USA), 70 FPS (WC USA)\n- CS2 (Low) - 190 FPS\n- Fortnite (Low - DX12) - 190 FPS\n- Fortnite (Performance Mode) - 210 FPS\n- The Finals (Medium) - 110 FPS\n\nRGB Control:  \nThis PC uses Sapphire TriXX for the graphics card, and Gigabyte RGBFusion for the motherboard. Both apps come preinstalled on the system and will be automatically added to your desktop upon account creation. Drivers for the CPU/GPU/motherboard are also preinstalled.\n\nPC Specs:\n- CPU: Ryzen 5 3600\n- Cooler: darkFlash Z4 Pro Mist\n- RAM: Silicon Power DDR4-3200 (2x8GB)\n- Motherboard: Gigabyte B450M DS3H WiFi (with aftermarket antennas)\n- Storage: Intel 660P 1TB\n- GPU: Sapphire NITRO+ Radeon RX 5700 XT\n- Case: DIYPC ARGB-M1-BK\n- PSU: HP1 600W\n- OS: Windows 11 Pro (Activated)\n- Networking: Wi-Fi / Ethernet\n\nWhat\u2019s in the Box?\n- Gaming PC\n- Power Cable\n- Wi-Fi Antennas\n- Personalized Quick Start Guide  \n&nbsp;  \n**This is not a full setup, don\u2019t expect a keyboard, mouse, or monitor.**"
