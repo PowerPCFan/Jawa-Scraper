@@ -24,6 +24,29 @@
     "listings": [
         {
             "metadata": {
+                "uuid": "c5a0f5de-71cc-56c9-9ad5-a1ad9f18a4d8",
+                "title": "\ud83e\udde1\ud83c\udf6f The Honey \ud83d\udc1d\ud83e\udd0d | RTX 3070 | Ryzen 7 3700X | 32GB DDR4 | 1TB SSD",
+                "url": "https://www.jawa.gg/product/106632/the-honey-or-rtx-3070-or-ryzen-7-3700x-or-32gb-ddr4-or-1tb-ssd"
+            },
+            "media": {
+                "thumbnail_url": "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-31d5b314ce6cc9aa3ed0854e8817cb95/0e551f25-154e-5906-ac5c-aafad1aeb40e.jpeg",
+                "images": [
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-31d5b314ce6cc9aa3ed0854e8817cb95/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-633e61e740781661bf0dac3b2c83aa3f/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-77284a708bc65b5b5d7268d5b075df66/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg"
+                ]
+            },
+            "status": {
+                "price": "$1000.00",
+                "shipping_cost": "0.00",
+                "sold_out": false
+            },
+            "details": {
+                "description": "*The Honey* Mid-Range Gaming PC is perfect for games, productivity, content creation, streaming, and more!\n\nThis PC is:\n- \u2705 **Thoroughly stress-tested and benchmarked** to ensure there are no stability issues and that the PC is performing as expected.\n- \ud83d\udc4c Ready to go when received with minimal setup - just **follow my simple Quick Start Guide, make an account for Windows, and you're all set**!\n- \ud83c\udfae Perfect for playing any game at 1080p, 1440p, and even 4K - some benchmarks are listed below, and you can search \"RTX 3070 + Ryzen 7 3700X benchmarks\" on YouTube to find even more!  \n\nOther:\n- \ud83d\udcac **If you have any questions or concerns, don't hesitate to reach out before buying!**\n- \ud83c\udf08 RGB: This PC uses **OpenRGB** for the graphics card and motherboard (case fans and cooler). OpenRGB comes preinstalled on the system and will be automatically added to your desktop upon account creation. ***NOTE:*** *If OpenRGB asks you to \"resize the zones\" upon first startup, **set each zone to \"16\"**.*\n- \ud83d\udcbe Drivers: All drivers for **core system hardware** are preinstalled, but if you have any additional peripherals that you plan on using that require any software or drivers, **you'll have to install that yourself**.\n\nGames and Benchmarks:  \n*All benchmarks and games were run at 1080p resolution. More details in the individual results below.*\n- Unigine Superposition (Extreme) - 8484 pts\n- Cinebench R23 (Multi-core) - 11989 pts\n- 3DMark Steel Nomad - 3178 pts\n- 3DMark Time Spy - 12721 pts\n- BeamNG (Normal, Vulkan) - 180 FPS (EC USA), 125 FPS (WC USA)\n- CS2 (Low) - 210 FPS\n- The Finals (Medium) - 140 FPS\n\nPC Specs:\n- CPU: Ryzen 7 3700X\n- Cooler: Thermalright Aqua Elite 240\n- RAM: 32GB Timetec Pinnacle Konduit DDR4-3200 (2x16GB)\n- Motherboard: JGINYUE B450 White ARGB\n- Storage: Kingston NV2 1TB\n- GPU: EVGA RTX 3070 XC3 Gaming 8GB\n- Case: Sama ARGB-Q5 (White)\n- PSU: Raidmax Cobra RX650AED\n- OS: Windows 11 Pro\n- Networking: Ethernet only (You can order a USB Wi-Fi adapter for under $15 on Amazon)\n\nWhat\u2019s in the Box?\n- Gaming PC\n- Power Cable\n- Personalized Quick Start Guide  \n&nbsp;  \n**This is not a full setup, don\u2019t expect a keyboard, mouse, or monitor.**"
+            }
+        },
+        {
+            "metadata": {
                 "uuid": "9623b39f-e6ea-5fb0-a858-1abaad94c1c1",
                 "title": "AMD Ryzen 5 5500 (Brand New)",
                 "url": "https://www.jawa.gg/product/103944/amd-ryzen-5-5500-brand-new"
