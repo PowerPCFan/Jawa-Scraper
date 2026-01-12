@@ -5,8 +5,8 @@
             "picture": "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-avatar-d573f9f2b879262425522204bed55bed/f6012e30-7414-5df0-ab5e-2de557cfac11.jpeg",
             "name": "Charlie's Computers",
             "verified": true,
-            "followers": 14,
-            "sold": 10
+            "followers": 15,
+            "sold": 11
         },
         "reviews": {
             "count": 6,
@@ -37,9 +37,9 @@
                 ]
             },
             "status": {
-                "price": "$1000.00",
+                "price": null,
                 "shipping_cost": "0.00",
-                "sold_out": false
+                "sold_out": true
             },
             "details": {
                 "description": "*The Honey* Mid-Range Gaming PC is perfect for games, productivity, content creation, streaming, and more!\n\nThis PC is:\n- \u2705 **Thoroughly stress-tested and benchmarked** to ensure there are no stability issues and that the PC is performing as expected.\n- \ud83d\udc4c Ready to go when received with minimal setup - just **follow my simple Quick Start Guide, make an account for Windows, and you're all set**!\n- \ud83c\udfae Perfect for playing any game at 1080p, 1440p, and even 4K - some benchmarks are listed below, and you can search \"RTX 3070 + Ryzen 7 3700X benchmarks\" on YouTube to find even more!  \n\nOther:\n- \ud83d\udcac **If you have any questions or concerns, don't hesitate to reach out before buying!**\n- \ud83c\udf08 RGB: This PC uses **OpenRGB** for the graphics card and motherboard (case fans and cooler). OpenRGB comes preinstalled on the system and will be automatically added to your desktop upon account creation. ***NOTE:*** *If OpenRGB asks you to \"resize the zones\" upon first startup, **set each zone to \"16\"**.*\n- \ud83d\udcbe Drivers: All drivers for **core system hardware** are preinstalled, but if you have any additional peripherals that you plan on using that require any software or drivers, **you'll have to install that yourself**.\n\nGames and Benchmarks:  \n*All benchmarks and games were run at 1080p resolution. More details in the individual results below.*\n- Unigine Superposition (Extreme) - 8484 pts\n- Cinebench R23 (Multi-core) - 11989 pts\n- 3DMark Steel Nomad - 3178 pts\n- 3DMark Time Spy - 12721 pts\n- BeamNG (Normal, Vulkan) - 180 FPS (EC USA), 125 FPS (WC USA)\n- CS2 (Low) - 210 FPS\n- The Finals (Medium) - 140 FPS\n\nPC Specs:\n- CPU: Ryzen 7 3700X\n- Cooler: Thermalright Aqua Elite 240\n- RAM: 32GB Timetec Pinnacle Konduit DDR4-3200 (2x16GB)\n- Motherboard: JGINYUE B450 White ARGB\n- Storage: Kingston NV2 1TB\n- GPU: EVGA RTX 3070 XC3 Gaming 8GB\n- Case: Sama ARGB-Q5 (White)\n- PSU: Raidmax Cobra RX650AED\n- OS: Windows 11 Pro\n- Networking: Ethernet only (You can order a USB Wi-Fi adapter for under $15 on Amazon)\n\nWhat\u2019s in the Box?\n- Gaming PC\n- Power Cable\n- Personalized Quick Start Guide  \n&nbsp;  \n**This is not a full setup, don\u2019t expect a keyboard, mouse, or monitor.**"
