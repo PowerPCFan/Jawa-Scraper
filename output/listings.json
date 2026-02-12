@@ -76,7 +76,11 @@
             },
             "media": {
                 "thumbnail_url": "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-8b176681daa0d7bcac9736e373d60046/0e551f25-154e-5906-ac5c-aafad1aeb40e.jpeg",
-                "images": []
+                "images": [
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-8b176681daa0d7bcac9736e373d60046/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-e69580eed462fc9205172bc0679875bb/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg",
+                    "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-7d332e28158bb3e5ad5c10daeb8181f6/a66bec41-1c24-5255-80e3-43e9dbe4cfec.jpeg"
+                ]
             },
             "status": {
                 "price": null,
