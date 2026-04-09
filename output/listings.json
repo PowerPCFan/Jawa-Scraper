@@ -6,7 +6,7 @@
             "name": "Charlie's Computers",
             "verified": true,
             "followers": 16,
-            "sold": 11
+            "sold": 12
         },
         "reviews": {
             "count": 6,
@@ -32,7 +32,7 @@
             "status": {
                 "price": null,
                 "shipping_cost": "0.00",
-                "sold_out": false
+                "sold_out": true
             },
             "details": {
                 "description": "***The Ice Cube*** is perfect for games, productivity, content creation, streaming, and more!\n\nThis PC is:\n- \u2705 **Thoroughly stress-tested and benchmarked** to ensure there are no stability issues and that the PC is performing as expected.\n- \ud83d\udc4c Ready to go when received with minimal setup - just **follow my simple Quick Start Guide, make an account for Windows, and you're all set**!\n- \ud83c\udfae Perfect for playing any game at 1080p, 1440p, and 4K - Search \"RTX 5060 + Ryzen 7 5500 benchmarks\" on YouTube to find benchmarks! I recommend this video, showcasing Fortnite, Minecraft, CoD, Valorant, and more: https://www.youtube.com/watch?v=nbH238iNcjw  \n\nOther:\n- \ud83d\udcac **If you have any questions or concerns, don't hesitate to reach out before buying!**\n- \ud83c\udf08 RGB: This PC's case fans use a **case button** for RGB. Simply press the button on the case to cycle between the many options available for lighting! The GPU uses PNY's **VelocityX** software, which will be placed on your desktop automatically upon account creation. \n- \ud83d\udcbe Drivers: All drivers for **core system hardware** are preinstalled, but if you have any additional peripherals that you plan on using that require any software or drivers, **you'll have to install that yourself**.\n\nPC Specs:\n*Note: These are the correct specs. Specs shown by Jawa may be slightly inaccurate, as there is a limited catalog of parts to choose from.*\n- CPU: Ryzen 5 5500\n- Cooler: ID-COOLING FROSTFLOW X 240 Snow\n- RAM: 32GB G.SKILL Ripjaws V DDR4-3200\n- Motherboard: ASRock B550 Phantom Gaming 4/ac (ATX)\n- Storage: KIOXIA 1TB SSD Gen4 KBG50ZNV1T02\n- GPU: PNY ARGB OC RTX 5060 8GB\n- Case: XPG STARKER AIR WHITE\n- PSU: Corsair CX750\n- OS: Windows 11 Pro\n- Networking: Ethernet, Wi-Fi, Bluetooth\n\nWhat\u2019s in the Box?\n- Gaming PC\n- Power Cable\n- Wi-Fi/Bluetooth Antennas\n- Personalized Quick Start Guide  \n&nbsp;  \n**This is not a full setup, don\u2019t expect a keyboard, mouse, or monitor.**"
