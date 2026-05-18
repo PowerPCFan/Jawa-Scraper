@@ -21,6 +21,25 @@
     "listings": [
         {
             "metadata": {
+                "uuid": "062437df-87e0-5c90-b36d-02ac5d9c9bfe",
+                "title": "No Title",
+                "url": "https://www.jawa.gg/product/122571/project-hellspawn-20-or-rtx-2070-or-ryzen-5-3600-or-16gb-ram-or-512gb-ssd"
+            },
+            "media": {
+                "thumbnail_url": "https://raw.githubusercontent.com/PowerPCFan/Jawa-Scraper/refs/heads/main/output/images/images/production-listing-e5c0492c22b2cee8cb9dcffbf3f10586/5a210e16-c375-5ee2-9d0b-71b355c62da2.jpeg",
+                "images": []
+            },
+            "status": {
+                "price": null,
+                "shipping_cost": "0.00",
+                "sold_out": false
+            },
+            "details": {
+                "description": "Introducing ***Project Hellspawn 2.0***. Get ready to experience solid performance in nearly any task with this budget gaming PC. Equipped with the Ryzen 5 3600 CPU and the RTX 2070 GPU, this system is perfect for gamers or content creators alike.\n\nThis PC is:\n- \u2705 **Thoroughly stress-tested and benchmarked** to ensure there are no stability issues and that the PC is performing as expected. Successfully passed a FurMark + Cinebench test without instability, crashing, or overheating.\n- \ud83d\udc4c Ready to go when received with minimal setup - just **follow my simple Quick Start Guide** and you're all set!\n- \ud83c\udfae Perfect for playing any game at 1080p - Search \"RTX 2070 + Ryzen 5 3600 benchmarks\" on YouTube to get a good idea of performance in games before buying. I recommend this video, showcasing performance in 10 games: https://www.youtube.com/watch?v=45x-N9Ge6nc\n\nOther:\n- \ud83d\udcac **If you have any questions or concerns, don't hesitate to reach out before buying!**\n- \ud83c\udf08 RGB: This PC's case fans use a **case button** for RGB. Simply press the button on the case to cycle between the many options available for lighting!\n- \ud83d\udcbe Drivers: All drivers for **core system hardware** (e.g., GPU, Wi-Fi) are preinstalled.\n\nPC Specs:\n*Note: These are the correct specs. Specs shown by Jawa may be slightly inaccurate, as there is a limited catalog of parts to choose from.*\n- CPU: Ryzen 5 3600\n- Cooler: darkFlash Z4 Pro Mist\n- RAM: Silicon Power 16GB DDR4-3200 (2x8GB)\n- Motherboard: AMD B450\n- Storage: Micron 512GB\n- GPU: Gigabyte RTX 2070\n- Case: DIYPC M1\n- PSU: Great Wall E750\n- OS: Windows 11 Pro\n- Networking: Ethernet, Wi-Fi\n\nWhat\u2019s in the Box?\n- Gaming PC\n- Power Cable\n- Antennas\n- Personalized Quick Start Guide  \n&nbsp;  \n**This is not a full setup, don\u2019t expect a keyboard, mouse, or monitor.**"
+            }
+        },
+        {
+            "metadata": {
                 "uuid": "0de59e6d-f3b3-5c89-b744-6d00dfe26e4f",
                 "title": "No Title",
                 "url": "https://www.jawa.gg/product/114954/the-ice-cube-or-rtx-5060-or-ryzen-5500-or-32gb-ram-or-1tb-ssd"
